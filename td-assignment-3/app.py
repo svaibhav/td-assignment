@@ -17,26 +17,46 @@ def get_data():
     return jsonify(data)
 
 
+@app.route("/submittodoitem", methods=["POST"])
+def submit_todo_item():
+    error = None
+
+    if request.method == "POST":
+        item_name = request.form.get("name")
+
+        try:
+            if not item_name:
+                raise Exception("Item name is required")
+
+            # Here you would typically insert the item into a database
+            # For demonstration, we just return a success message
+            return jsonify({"message": f"Item '{item_name}' added successfully!"})
+
+        except Exception as e:
+            error = str(e)
+
+    return render_template("todo.html", error=error)
+
 @app.route("/", methods=["GET", "POST"])
 def form_page():
     error = None
 
     if request.method == "POST":
         name = request.form.get("name")
-        email = request.form.get("email")
+        description = request.form.get("description")
 
         try:
-            if not name or not email:
+            if not name or not description:
                 raise Exception("Both fields are required")
 
-            collection.insert_one({"name": name, "email": email})
+            collection.insert_one({"name": name, "description": description})
 
             return redirect(url_for("success_page"))
 
         except Exception as e:
             error = str(e)
 
-    return render_template("form.html", error=error)
+    return render_template("todo.html", error=error)
 
 
 @app.route("/success")
