@@ -11,9 +11,15 @@
         <p style="color:red;">Error: {{ error }}</p>
     {% endif %}
 
-    <form method="POST">
+    <form action="/submittodoitem" method="POST">
         <label>Item ID:</label><br>
         <input type="text" name="item_id"><br><br>
+
+        <label>Item UUID:</label><br>
+        <input type="text" name="item_uuid"><br><br>
+
+        <label>Item Hash:</label><br>
+        <input type="text" name="item_hash"><br><br>
 
         <label>Item Name:</label><br>
         <input type="text" name="name"><br><br>
